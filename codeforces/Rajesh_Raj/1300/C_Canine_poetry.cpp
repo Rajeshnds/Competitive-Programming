@@ -2,7 +2,7 @@
 using namespace std;
 # define fast ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)
 # define ll long long
-const int N=2e5+5,mod=1e9+7;const ll inf=1e18;ll _T;
+const int N=1e5+5,mod=1e9+7;const ll inf=1e18;ll _T;
 int n;
 vector<int>v;
 vector<vector<int>>adj;
@@ -30,14 +30,22 @@ void solve(){
     //     }
     // }
     // cout<<ans;
-    int ans=0;
+    // int ans=0;
+    // for(int i=1;i<s.size();i++){
+    //     if(s[i]==s[i-1]||(i>1&&s[i]==s[i-2])){
+    //         s[i]='0';
+    //         ans++;
+    //     }
+    // }
+    // cout<<ans;
+    int dp[N][26][26];
+    memset(dp,0,sizeof(dp));
+    int size=s.size();
     for(int i=1;i<s.size();i++){
-        if(s[i]==s[i-1]||(i>1&&s[i]==s[i-2])){
-            s[i]='0';
-            ans++;
-        }
+        if(s[i]==s[i-1])dp[i][s[i]-'a'][s[i-1]-'a']=dp[i-1][s[i]-'a'][s[i-1]-'a']+1;
+        if(i>1&&s[i]==s[i-2])dp[i][s[i]-'a'][s[i-2]-'a']=dp[i-2][s[i]-'a'][s[i-2]-'a']+1;
     }
-    cout<<ans;
+    cout<<dp[size-1][s[size-1]-'a'][s[size-2]-'a']+dp[size-1][s[size-2]-'a'][s[size-3]-'a'];
 }
 void read_file(){
     freopen("traffic.in","r",stdin);
